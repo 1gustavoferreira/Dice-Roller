@@ -1,7 +1,9 @@
 package br.com.gustavoferreira.diceroller.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.com.gustavoferreira.diceroller.R
 import br.com.gustavoferreira.diceroller.data.Dice
@@ -14,9 +16,11 @@ import br.com.gustavoferreira.diceroller.databinding.ActivityMainBinding
 
  class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        insertListener()
 
 
         binding.rollBtn.setOnClickListener {
@@ -24,6 +28,15 @@ import br.com.gustavoferreira.diceroller.databinding.ActivityMainBinding
 
         }
     }
+
+    private fun insertListener() {
+        binding.floatingBtn.setOnClickListener {
+            val intent = Intent(this@MainActivity, DiceTwoActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
     /**
      * Roll the dice and update the screen with the result.
      */
@@ -37,6 +50,7 @@ import br.com.gustavoferreira.diceroller.databinding.ActivityMainBinding
         val diceImage: ImageView = binding.ivDice
 
         // Determine which drawable resource ID to use based on the dice roll
+
         val drawableResource = when (diceRoll) {
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
@@ -49,13 +63,14 @@ import br.com.gustavoferreira.diceroller.databinding.ActivityMainBinding
         diceImage.setImageResource(drawableResource)
 
         // Update the content description
+        val toast = Toast.makeText(this, "Dice Rolled!", Toast.LENGTH_SHORT)
+        toast.show()
         diceImage.contentDescription = diceRoll.toString()
 
         //val diceTwentySides = Dice (20)
         //val diceRollTwenty = diceTwentySides.roll()
 
         // Update the screen with the dice roll six sides
-
 
 // Update the screen with the dice roll 20 sides
         //val resultDiceTwentySides: TextView = binding.diceTwentySides
